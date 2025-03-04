@@ -1,0 +1,123 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               String     @id @default(auto()) @map("_id") @db.ObjectId
+  name             String?
+  email            String?    @unique
+  emailVerified    DateTime?
+  image            String?
+  hasPaid          Boolean?   @default(false)
+  subscriptionType String?
+  role             String?    @default("owner")
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+  employees        Employee[]
+  sessions         Session[]
+  accounts         Account[]
+  customers        Customer[]
+}
+
+model Session {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  sessionToken String   @unique
+  userId       String   @db.ObjectId
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Account {
+  id                       String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId                   String  @db.ObjectId
+  type                     String
+  provider                 String
+  providerAccountId        String
+  refresh_token            String? @db.String
+  access_token             String? @db.String
+  expires_at               Int?
+  refresh_token_expires_in Int?
+  token_type               String?
+  scope                    String?
+  id_token                 String? @db.String
+  session_state            String?
+  user                     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model VerificationToken {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// TODO:  User -> Employee (roles)
+model Employee {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  position      String
+  role          String
+  contactNumber String?
+  email         String
+  image         String?
+  userId        String    @db.ObjectId
+  user          User      @relation(fields: [userId], references: [id])
+  workOrder     WorkOrder @relation(fields: [workOrderId], references: [id])
+  workOrderId   String    @db.ObjectId
+}
+
+// 'Company' User -> Customer -> Vehicle(s)
+model Customer {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  contactNumber String
+  email         String
+  vehicles      Vehicle[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  user          User      @relation(fields: [userId], references: [id])
+  userId        String    @db.ObjectId
+}
+
+model Vehicle {
+  id          String       @id @default(auto()) @map("_id") @db.ObjectId
+  plateNumber String
+  vinNumber   String
+  state       String
+  image       String?
+  customer    Customer     @relation(fields: [customerId], references: [id])
+  customerId  String       @db.ObjectId
+  workOrders  WorkOrder[]
+  inspections Inspection[]
+}
+
+model WorkOrder {
+  id        String     @id @default(auto()) @map("_id") @db.ObjectId
+  title     String
+  completed Boolean    @default(false)
+  employees Employee[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  vehicle   Vehicle    @relation(fields: [vehicleId], references: [id])
+  vehicleId String     @db.ObjectId
+}
+
+// TODO: inspections (allow user to input a date out from current day or use 365 days - 10-30 days for reporting to user)
+model Inspection {
+  id               String   @id @default(auto()) @map("_id") @db.ObjectId
+  title            String
+  dueDate          DateTime
+  completedAt      DateTime
+  notificationSent Boolean  @default(false)
+  vehicleId        String   @db.ObjectId
+  vehicle          Vehicle  @relation(fields: [vehicleId], references: [id])
+}
