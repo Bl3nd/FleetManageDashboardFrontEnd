@@ -101,7 +101,7 @@ export default function LoginForm() {
 							<Link
 								href='#'
 								className='flex w-full items-center justify-center gap-3 rounded-md bg-light-blue-800 px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-light-blue-900 cursor-pointer'
-								onClick={() => signIn('google', {callbackUrl: 'http://localhost:3000/dashboard'})}
+								/*onClick={() => signIn('google', {callbackUrl: 'http://localhost:3000/dashboard'})}*/
 							>
 								<svg className="h-10 w-10" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
 								     viewBox="0 0 24 24">
@@ -132,7 +132,7 @@ export default function LoginForm() {
 							<Link
 								href='#'
 								className='flex w-full items-center justify-center gap-3 rounded-md bg-light-blue-800 px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-light-blue-900 cursor-pointer'
-								onClick={() => signIn('github', {callbackUrl: 'http://localhost:3000/dashboard'})}
+								/*onClick={() => signIn('github', {callbackUrl: 'http://localhost:3000/dashboard'})}*/
 							>
 								<svg className="h-10 w-10" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
 									<path
