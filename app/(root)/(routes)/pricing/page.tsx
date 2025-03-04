@@ -89,7 +89,7 @@ export default function PricingPage() {
 						</h3>
 						<p className='mt-4 flex items-baseline gap-x-1'>
 								<span className='text-5xl font-bold tracking-tight text-blue-300'>
-									{tier.price[frequency.value]}
+									{tier.price[frequency.value as keyof typeof tier.price]}
 								</span>
 							<span className='text-base text-blue-400'>{frequency.priceSuffix}</span>
 						</p>
