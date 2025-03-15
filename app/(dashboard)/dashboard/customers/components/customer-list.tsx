@@ -1,8 +1,16 @@
 "use client";
 
-import React, {useLayoutEffect, useRef, useState} from "react";
-import {Customer} from "@prisma/client";
+import React from "react";
 import AddNewButton from "./add-new-button";
+
+interface Customer {
+	id: string,
+	name: string,
+	contactNumber: string,
+	email: string,
+	createdAt: string,
+	updatedAt: string,
+}
 
 export default function CustomerList({data}: { data: Customer[] | [] }) {
 	return (
@@ -61,15 +69,15 @@ export default function CustomerList({data}: { data: Customer[] | [] }) {
 													<dt className='sr-only'>Contact #</dt>
 													<dt className='mt-1 truncate text-blue-700 opacity-70'>{customer.contactNumber}</dt>
 													<dt className='sr-only sm:hidden'>Date</dt>
-													<dt className='mt-1 truncate text-blue-700 opacity-70 sm:hidden'>{customer.createdAt.toDateString()}</dt>
+													<dt className='mt-1 truncate text-blue-700 opacity-70 sm:hidden'>{customer.updatedAt}</dt>
 												</dl>
 											</td>
 											<td className='hidden px-3 py-4 text-sm text-blue-700 lg:table-cell'>{customer.contactNumber}</td>
-											<td className='hidden px-3 py-4 text-sm text-blue-700 sm:table-cell'>{customer.createdAt.toDateString()}</td>
+											<td className='hidden px-3 py-4 text-sm text-blue-700 sm:table-cell'>{customer.updatedAt}</td>
 											<td className='py-4 pl-3 pr-4 text-sm font-medium sm:pr-0'>
 												<a
 													className='text-blue-300 hover:text-blue-100 truncate'
-													href={`/dashboard/customers/${customer.id}`}
+													href="#"
 												>
 													Go to<span className='sr-only'>, {customer.name}</span>
 												</a>

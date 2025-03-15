@@ -86,7 +86,7 @@ const NewVehicleForm = ({
 	const [isAddAnother, setIsAddAnother] = useState(false);
 
 	const onSubmit: SubmitHandler<VehicleFormType> = async (data) => {
-		try {
+		/*try {
 			await axios.post(`/api/${user}/customers/${customerId}/vehicles`, data);
 			if (!isAddAnother) {
 				router.refresh();
@@ -98,7 +98,7 @@ const NewVehicleForm = ({
 			console.log("Success");
 		} catch (error) {
 			throw new Error('Something went wrong.')
-		}
+		}*/
 	}
 
 	return (

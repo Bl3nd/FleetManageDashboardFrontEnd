@@ -1,23 +1,27 @@
-import {getServerSession} from "next-auth";
-import prismadb from "@/lib/prismadb";
 import React from "react";
 import CustomerList from "@/app/(dashboard)/dashboard/customers/components/customer-list";
 
+const customerData = [
+	{
+		id: "1",
+		name: "John Doe Company",
+		contactNumber: "333-333-3333",
+		email: "john@example.com",
+		createdAt: "2021-03-03T00:00:00.000Z",
+		updatedAt: "2021-03-03T00:00:00.000Z",
+	},
+	{
+		id: "2",
+		name: "Ill Company",
+		contactNumber: "111-222-3333",
+		email: "john@example.com",
+		createdAt: "2019-02-03T00:00:00.000Z",
+		updatedAt: "2021-07-03T00:00:00.000Z",
+	}
+];
+
 export default async function CustomerPage() {
-	const session = await getServerSession();
-	const user = await prismadb.user.findFirst({
-		where: {
-			email: session?.user?.email,
-		},
-	});
-
-	const customers = await prismadb.customer.findMany({
-		where: {
-			userId: user?.id,
-		},
-	});
-
 	return (
-		<CustomerList data={customers}/>
+		<CustomerList data={customerData}/>
 	)
 };

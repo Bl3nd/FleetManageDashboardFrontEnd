@@ -26,7 +26,7 @@ const NewCustomerForm = ({user}: { user: string | undefined; }) => {
 	});
 
 	const onSubmit: SubmitHandler<CustomerFormType> = async (data) => {
-		try {
+		/*try {
 			await axios.post(`/api/${user}/customers`, data);
 			if (!isAddAnother) {
 				router.refresh();
@@ -38,7 +38,7 @@ const NewCustomerForm = ({user}: { user: string | undefined; }) => {
 			console.log("Success");
 		} catch (error) {
 			throw new Error("Something went wrong.");
-		}
+		}*/
 	};
 
 	return (

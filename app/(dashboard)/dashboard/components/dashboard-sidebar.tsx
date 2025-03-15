@@ -22,17 +22,7 @@ function classNames(...classes: any) {
 	return classes.filter(Boolean).join(' ');
 }
 
-type User = {
-	name?: string | null | undefined;
-	email?: string | null | undefined;
-	image?: string | null | undefined;
-} | undefined;
-
-type UserProps = {
-	user: User;
-}
-
-export default function DashboardSidebarLayout({user}: UserProps) {
+export default function DashboardSidebarLayout() {
 	const [sidebarOpen, setSidebarOpen] = useState(false);
 	const router = useRouter();
 	const pathname = usePathname();
@@ -53,7 +43,7 @@ export default function DashboardSidebarLayout({user}: UserProps) {
 
 	const userNavigation = [
 		{name: 'Your profile', href: '/dashboard/#'},
-		{name: 'Sign out', href: '/api/auth/signout?callbackUrl=/'},
+		{name: 'Sign out', href: '/'},
 	];
 
 	return (
@@ -306,20 +296,12 @@ export default function DashboardSidebarLayout({user}: UserProps) {
 							<Menu as='div' className='relative'>
 								<Menu.Button className='-m-1.5 flex items-center p-1.5'>
 									<span className='sr-only'>Open user menu</span>
-									<Image
-										height={32}
-										width={32}
-										className='rounded-full bg-blue-100'
-										src={`${user?.image}`}
-										alt=''
-										priority={false}
-									/>
 									<span className='hidden lg:flex lg:items-center'>
 										<span
 											className='ml-4 text-sm font-bold leading-6 text-blue-300'
 											aria-hidden='true'
 										>
-											{user?.name}
+											TestUsername
 										</span>
 										<ChevronDownIcon className='ml-2 h-5 w-5 text-blue-400' aria-hidden='true'/>
 									</span>
